@@ -10,21 +10,27 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>PromptVault</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{--bg:#09090b;--s1:#111113;--s2:#18181b;--bdr:rgba(255,255,255,.06);--t1:#fafafa;--t2:#a1a1aa;--t3:#71717a;--ac:#a855f7}
+:root{--bg:#09090b;--s1:#111113;--s2:#18181b;--bdr:rgba(255,255,255,.06);--t1:#fafafa;--t2:#a1a1aa;--t3:#71717a;--ac:#a855f7;--neon1:#a855f7;--neon2:#06b6d4;--neon3:#ec4899}
 html,body{background:var(--bg);color:var(--t1);font-family:Inter,system-ui,sans-serif;overflow-x:hidden;min-height:100vh;min-height:100dvh}
 body{max-width:520px;margin:0 auto;position:relative}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#27272a;border-radius:4px}
 
 .glow{display:none}
 
-.hdr{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(9,9,11,.87);border-bottom:1px solid var(--bdr);padding:14px 16px 12px}
-.hdr-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.logo{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#a855f7,#6366f1);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:#fff;flex-shrink:0}
+.hdr{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(9,9,11,.92);border-bottom:1px solid var(--bdr);padding:14px 16px 12px}
+.hdr-top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.logo{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;overflow:hidden}
+.logo svg{width:28px;height:28px;filter:drop-shadow(0 0 6px rgba(168,85,247,.6))}
+.logo::before{content:'';position:absolute;inset:0;border-radius:12px;padding:2px;background:linear-gradient(135deg,var(--neon1),var(--neon2),var(--neon3),var(--neon1));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:logoBorder 3s linear infinite}
+.logo::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(168,85,247,.15),rgba(6,182,212,.15));border-radius:12px}
+@keyframes logoBorder{0%{filter:hue-rotate(0deg)}100%{filter:hue-rotate(360deg)}}
+@keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+.logo svg{animation:logoFloat 3s ease-in-out infinite}
 .brand{flex:1}
-.brand-name{font-size:18px;font-weight:700;letter-spacing:-.3px}
+.brand-name{font-family:'Orbitron',sans-serif;font-size:24px;font-weight:800;letter-spacing:1px;background:linear-gradient(135deg,#a855f7,#06b6d4,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:none;filter:drop-shadow(0 0 20px rgba(168,85,247,.3))}
 .brand-sub{font-size:11px;color:var(--t3);font-weight:500;margin-top:1px}
 .sv-btn{padding:6px 14px;border-radius:20px;border:1px solid var(--bdr);background:none;color:var(--t3);font-size:12px;font-family:inherit;font-weight:600;cursor:pointer;transition:.2s}
 .sv-btn.on{border-color:#eab308;color:#eab308;background:rgba(234,179,8,.08)}
@@ -52,15 +58,18 @@ body{max-width:520px;margin:0 auto;position:relative}
 .pill:hover{background:rgba(168,85,247,.18)}
 .pill-clear{color:var(--t3);background:none;border:1px solid var(--bdr)}
 
-.count{padding:8px 16px;font-size:11px;color:var(--t3);border-bottom:1px solid var(--bdr)}
+.count{padding:8px 16px;font-size:11px;color:var(--t3)}
 
-.row{border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;transition:background .15s;animation:fu .3s ease both}
-.row:hover{background:rgba(255,255,255,.03)}
+.neon-sep{height:1px;background:linear-gradient(90deg,transparent,var(--neon1),var(--neon2),var(--neon3),transparent);background-size:200% 100%;animation:neonSlide 3s linear infinite;opacity:.5}
+@keyframes neonSlide{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+.row{cursor:pointer;transition:background .15s;animation:fu .3s ease both}
+.row:hover{background:rgba(168,85,247,.04)}
 .row:active{transform:scale(.998)}
 .row-in{display:flex;align-items:center;padding:14px 16px;gap:12px}
 .row-c{flex:1;min-width:0}
-.row-t{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
-.row-m{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:500;color:var(--t3)}
+.row-t{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;letter-spacing:.3px}
+.row-m{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.8px}
 .row-m span{white-space:nowrap}
 .star{font-size:18px;background:none;border:none;cursor:pointer;padding:4px;color:#52525b;transition:.15s;flex-shrink:0}
 .star.on{color:#eab308}
@@ -74,8 +83,12 @@ body{max-width:520px;margin:0 auto;position:relative}
 .cpb:active{transform:scale(.98)}
 .cpb.ok{background:#22c55e}
 
-.lmore{display:block;margin:20px auto;padding:10px 24px;border-radius:8px;border:1px solid var(--bdr);background:var(--s1);color:var(--t3);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:.15s}
-.lmore:hover{border-color:var(--ac);color:var(--ac)}
+.lmore{display:none}
+
+.load-spinner{text-align:center;padding:20px;color:var(--t3);font-size:12px;display:none}
+.load-spinner.show{display:block}
+.load-spinner::before{content:'';display:block;width:24px;height:24px;margin:0 auto 8px;border:2px solid var(--bdr);border-top-color:var(--ac);border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 
 
@@ -96,7 +109,7 @@ body{max-width:520px;margin:0 auto;position:relative}
 
 <header class="hdr">
   <div class="hdr-top">
-    <div class="logo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="13" y2="11"/></svg></div>
+    <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="url(#logoGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#a855f7"><animate attributeName="stop-color" values="#a855f7;#06b6d4;#ec4899;#a855f7" dur="4s" repeatCount="indefinite"/></stop><stop offset="100%" stop-color="#06b6d4"><animate attributeName="stop-color" values="#06b6d4;#ec4899;#a855f7;#06b6d4" dur="4s" repeatCount="indefinite"/></stop></linearGradient></defs><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
     <div class="brand">
       <div class="brand-name">PromptVault</div>
     </div>
@@ -117,7 +130,7 @@ body{max-width:520px;margin:0 auto;position:relative}
 
 <div class="count" id="count"></div>
 <div id="list"></div>
-<button class="lmore" id="lmore">Load more</button>
+<div class="load-spinner" id="loadSpinner">Loading...</div>
 
 <div class="install-banner" id="installBanner">
   <p>Install PromptVault for offline access</p>
@@ -356,40 +369,46 @@ function filt(){
   return f;
 }
 
-function render(){
+function render(append){
   var fd=filt();
   var vis=fd.slice(0,S.pg*PP);
   var rem=fd.length-vis.length;
 
   document.getElementById("count").textContent=fd.length+" of "+D.length+" prompts";
 
+  var startIdx=append?(S.pg-1)*PP:0;
+  var endIdx=vis.length;
   var h="";
-  for(var i=0;i<vis.length;i++){
+  for(var i=startIdx;i<endIdx;i++){
     var p=vis[i];
     var isO=S.open===p.id;
     var isS=!!S.saved[p.id];
-    var dl=Math.min(i*0.015,0.3);
-    h+='<div class="row" style="animation-delay:'+dl+'s">';
+    h+='<div class="neon-sep"></div>';
+    h+='<div class="row">';
     h+='<div class="row-in" data-id="'+p.id+'">';
     h+='<div class="row-c">';
     h+='<div class="row-t">'+esc(p.t)+'</div>';
     h+='<div class="row-m">';
-    h+='<span style="color:'+cc_(p.c)+';text-transform:uppercase;letter-spacing:.5px">'+esc(p.c)+'</span>';
+    h+='<span style="color:'+cc_(p.c)+'">'+esc(p.c)+'</span>';
     h+='<span style="color:#3f3f46">&middot;</span>';
     h+='<span style="color:'+tc_(p.l)+'">'+esc(p.l)+'</span>';
     h+='</div></div>';
-    h+='<button class="star'+(isS?" on":"")+'" data-sv="'+p.id+'">'+(isS?"\u2605":"\u2606")+'</button>';
+    h+='<button class="star'+(isS?' on':'')+'" data-sv="'+p.id+'">'+(isS?'\u2605':'\u2606')+'</button>';
     h+='</div>';
-    h+='<div class="exp'+(isO?" show":"")+'">';
+    h+='<div class="exp'+(isO?' show':'')+'">';
     h+='<div class="pbox"><div class="ptxt">'+esc(p.p)+'</div></div>';
-    h+='<button class="cpb'+(S.copied===p.id?" ok":"")+'" data-cp="'+p.id+'">'+(S.copied===p.id?"\u2713 Copied":"Copy Prompt")+'</button>';
+    h+='<button class="cpb'+(S.copied===p.id?' ok':'')+'" data-cp="'+p.id+'">'+(S.copied===p.id?'\u2713 Copied':'Copy Prompt')+'</button>';
     h+='</div></div>';
   }
-  document.getElementById("list").innerHTML=h;
+  if(append){
+    document.getElementById("list").insertAdjacentHTML("beforeend",h);
+  } else {
+    document.getElementById("list").innerHTML=h;
+  }
 
-  var lb=document.getElementById("lmore");
-  if(rem>0){lb.style.display="block";lb.textContent="Load "+Math.min(rem,PP)+" more ("+rem+" remaining)"}
-  else{lb.style.display="none"}
+  var sp=document.getElementById("loadSpinner");
+  if(rem>0){sp.className="load-spinner show";S._hasMore=true}
+  else{sp.className="load-spinner";S._hasMore=false}
 
   mkPills();
   updChips();
@@ -470,8 +489,8 @@ document.addEventListener("click",function(e){
   if(el.id==="tBtn"){e.stopPropagation();closeDDs();document.getElementById("tDD").classList.toggle("show");return}
   if(el.id==="sBtn"){e.stopPropagation();closeDDs();document.getElementById("sDD").classList.toggle("show");return}
 
-  // Load more
-  if(el.id==="lmore"||el.closest(".lmore")){S.pg++;render();return}
+  // Load more — removed, now using infinite scroll
+  // if(el.id==="lmore"||el.closest(".lmore")){S.pg++;render();return}
 
   // Search clear
   if(el.id==="sClear"||el===document.getElementById("sClear")){
@@ -521,6 +540,21 @@ window.addEventListener("appinstalled",function(){
 
 buildDD();
 render();
+
+// Infinite scroll
+var _scrolling=false;
+window.addEventListener("scroll",function(){
+  if(_scrolling)return;
+  if(!S._hasMore)return;
+  var sp=document.getElementById("loadSpinner");
+  var rect=sp.getBoundingClientRect();
+  if(rect.top<window.innerHeight+200){
+    _scrolling=true;
+    S.pg++;
+    render(true);
+    _scrolling=false;
+  }
+});
 </script>
 </body>
 </html>
