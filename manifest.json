@@ -1,8 +1,8 @@
 {
-  "name": "PromptVault - 1450 AI Prompts",
+  "name": "PromptVault - 1600 AI Prompts",
   "short_name": "PromptVault",
   "id": "/",
-  "description": "The biggest AI prompt database. 1450 prompts across 70 categories and 19 tools.",
+  "description": "The biggest AI prompt database. 1600 prompts across 70+ categories and 19 tools.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
