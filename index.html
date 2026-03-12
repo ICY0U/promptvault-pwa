@@ -62,7 +62,6 @@ body{max-width:520px;margin:0 auto;position:relative}
 .row-t{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
 .row-m{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:500;color:var(--t3)}
 .row-m span{white-space:nowrap}
-.rate{font-size:11px;color:var(--t3);flex-shrink:0;font-weight:500;opacity:.7}
 .star{font-size:18px;background:none;border:none;cursor:pointer;padding:4px;color:#52525b;transition:.15s;flex-shrink:0}
 .star.on{color:#eab308}
 
@@ -111,7 +110,6 @@ body{max-width:520px;margin:0 auto;position:relative}
   <div class="chips">
     <div class="drw"><button class="chip" id="cBtn">Category &#9662;</button><div class="ddn" id="cDD"></div></div>
     <div class="drw"><button class="chip" id="tBtn">Tool &#9662;</button><div class="ddn" id="tDD"></div></div>
-    <div class="drw"><button class="chip" id="lBtn">Level &#9662;</button><div class="ddn" id="lDD"></div></div>
     <div class="drw"><button class="chip" id="sBtn">Sort &#9662;</button><div class="ddn" id="sDD"></div></div>
   </div>
   <div class="pills" id="pills"></div>
@@ -329,18 +327,15 @@ var TC={Suno:"#f97316",Udio:"#818cf8",Midjourney:"#a855f7","Stable Diffusion":"#
   Claude:"#d4a053",ChatGPT:"#22c55e",Sora:"#3b82f6",Runway:"#f97316",
   ElevenLabs:"#14b8a6",Any:"#94a3b8",Flux:"#e879f9",Gemini:"#4285f4",Perplexity:"#22b8cf",Cursor:"#00d4aa",Copilot:"#6366f1",Ideogram:"#f59e0b",Leonardo:"#a855f7",Pika:"#fb7185",Kling:"#818cf8"};
 
-var DDOTS={Simple:"\u25CF",Medium:"\u25CF\u25CF",Advanced:"\u25CF\u25CF\u25CF"};
-var DCOL={Simple:"#4ade80",Medium:"#fbbf24",Advanced:"#f87171"};
 var CATS=[],TOOLS=[],seen={},seenT={};
 for(var i=0;i<D.length;i++){if(!seen[D[i].c]){seen[D[i].c]=1;CATS.push(D[i].c)}if(!seenT[D[i].l]){seenT[D[i].l]=1;TOOLS.push(D[i].l)}}
 CATS.sort();TOOLS.sort();
-var LEVELS=["Simple","Medium","Advanced"];
-var SORTS=["Default","Rating High","Rating Low","A to Z","Z to A"];
+var SORTS=["Default","A to Z","Z to A"];
 
 function cc_(c){return CC[c]||"#94a3b8"}
 function tc_(t){return TC[t]||"#94a3b8"}
 
-var S={q:"",cat:"",tool:"",lvl:"",sort:"Default",sv:false,pg:1,open:null,saved:{},copied:null};
+var S={q:"",cat:"",tool:"",sort:"Default",sv:false,pg:1,open:null,saved:{},copied:null};
 var PP=30;
 
 try{S.saved=JSON.parse(localStorage.getItem("pv7s")||"{}")}catch(e){}
@@ -355,11 +350,8 @@ function filt(){
   if(S.q){var q=S.q.toLowerCase();f=f.filter(function(p){return p.t.toLowerCase().indexOf(q)>-1||p.c.toLowerCase().indexOf(q)>-1||p.l.toLowerCase().indexOf(q)>-1||p.p.toLowerCase().indexOf(q)>-1})}
   if(S.cat)f=f.filter(function(p){return p.c===S.cat});
   if(S.tool)f=f.filter(function(p){return p.l===S.tool});
-  if(S.lvl)f=f.filter(function(p){return p.d===S.lvl});
   if(S.sv)f=f.filter(function(p){return S.saved[p.id]});
-  if(S.sort==="Rating High")f=f.slice().sort(function(a,b){return b.r-a.r});
-  else if(S.sort==="Rating Low")f=f.slice().sort(function(a,b){return a.r-b.r});
-  else if(S.sort==="A to Z")f=f.slice().sort(function(a,b){return a.t.localeCompare(b.t)});
+  if(S.sort==="A to Z")f=f.slice().sort(function(a,b){return a.t.localeCompare(b.t)});
   else if(S.sort==="Z to A")f=f.slice().sort(function(a,b){return b.t.localeCompare(a.t)});
   return f;
 }
@@ -386,7 +378,6 @@ function render(){
     h+='<span style="color:#3f3f46">&middot;</span>';
     h+='<span style="color:'+tc_(p.l)+'">'+esc(p.l)+'</span>';
     h+='</div></div>';
-    h+='<span class="rate">'+p.r.toFixed(1)+'</span>';
     h+='<button class="star'+(isS?" on":"")+'" data-sv="'+p.id+'">'+(isS?"\u2605":"\u2606")+'</button>';
     h+='</div>';
     h+='<div class="exp'+(isO?" show":"")+'">';
@@ -408,7 +399,6 @@ function mkPills(){
   var h="";
   if(S.cat)h+='<span class="pill" data-clr="cat">'+esc(S.cat)+' \u2715</span>';
   if(S.tool)h+='<span class="pill" data-clr="tool">'+esc(S.tool)+' \u2715</span>';
-  if(S.lvl)h+='<span class="pill" data-clr="lvl">'+esc(S.lvl)+' \u2715</span>';
   if(S.sort!=="Default")h+='<span class="pill" data-clr="sort">'+esc(S.sort)+' \u2715</span>';
   if(h)h+='<span class="pill pill-clear" data-clr="all">Clear all \u2715</span>';
   document.getElementById("pills").innerHTML=h;
@@ -417,7 +407,6 @@ function mkPills(){
 function updChips(){
   var cb=document.getElementById("cBtn");cb.className="chip"+(S.cat?" on":"");cb.textContent=S.cat||"Category \u25BE";
   var tb=document.getElementById("tBtn");tb.className="chip"+(S.tool?" on":"");tb.textContent=S.tool||"Tool \u25BE";
-  var lb=document.getElementById("lBtn");lb.className="chip"+(S.lvl?" on":"");lb.textContent=S.lvl||"Level \u25BE";
   var sb=document.getElementById("sBtn");sb.className="chip"+(S.sort!=="Default"?" on":"");sb.textContent=S.sort==="Default"?"Sort \u25BE":S.sort;
 }
 
@@ -427,8 +416,6 @@ function buildDD(){
   document.getElementById("cDD").innerHTML=h;
   h="";for(i=0;i<TOOLS.length;i++){h+='<div class="ddi" data-f="tool" data-v="'+esc(TOOLS[i])+'"><span style="color:'+tc_(TOOLS[i])+'">&#9679; </span>'+esc(TOOLS[i])+'</div>'}
   document.getElementById("tDD").innerHTML=h;
-  h="";for(i=0;i<LEVELS.length;i++){h+='<div class="ddi" data-f="lvl" data-v="'+LEVELS[i]+'"><span style="color:'+DCOL[LEVELS[i]]+'">'+DDOTS[LEVELS[i]]+' </span>'+LEVELS[i]+'</div>'}
-  document.getElementById("lDD").innerHTML=h;
   h="";for(i=0;i<SORTS.length;i++){h+='<div class="ddi" data-f="sort" data-v="'+SORTS[i]+'">'+SORTS[i]+'</div>'}
   document.getElementById("sDD").innerHTML=h;
 }
@@ -438,9 +425,8 @@ function closeDDs(){var dd=document.querySelectorAll(".ddn");for(var i=0;i<dd.le
 function setF(type,val){
   if(type==="cat"){S.cat=S.cat===val?"":val}
   else if(type==="tool"){S.tool=S.tool===val?"":val}
-  else if(type==="lvl"){S.lvl=S.lvl===val?"":val}
   else if(type==="sort"){S.sort=S.sort===val?"Default":val}
-  else if(type==="all"){S.cat="";S.tool="";S.lvl="";S.sort="Default"}
+  else if(type==="all"){S.cat="";S.tool="";S.sort="Default"}
   S.pg=1;closeDDs();render();
 }
 
@@ -482,7 +468,6 @@ document.addEventListener("click",function(e){
   // Chip buttons -> toggle dropdowns
   if(el.id==="cBtn"){e.stopPropagation();closeDDs();document.getElementById("cDD").classList.toggle("show");return}
   if(el.id==="tBtn"){e.stopPropagation();closeDDs();document.getElementById("tDD").classList.toggle("show");return}
-  if(el.id==="lBtn"){e.stopPropagation();closeDDs();document.getElementById("lDD").classList.toggle("show");return}
   if(el.id==="sBtn"){e.stopPropagation();closeDDs();document.getElementById("sDD").classList.toggle("show");return}
 
   // Load more
