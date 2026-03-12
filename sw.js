@@ -1,4 +1,4 @@
-var CACHE = "promptvault-v16";
+var CACHE = "promptvault-v18";
 var ASSETS = ["./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", function(e) {
